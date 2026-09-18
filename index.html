@@ -76,6 +76,13 @@ header{
 .hbtn{margin-left:auto;flex:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);
   width:34px;height:34px;border-radius:9px;cursor:pointer;display:grid;place-items:center}
 .hbtn:hover{color:var(--ink)}
+.syncchip{margin-left:auto;flex:none;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:default}
+.syncchip.ok{background:var(--good-soft);color:var(--good);border-color:transparent}
+.syncchip.warn{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.syncchip.err{background:var(--crit-soft);color:var(--crit);border-color:transparent}
+.syncchip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.85;flex:none}
+.syncchip.spinning::before{border:2px solid currentColor;border-top-color:transparent;background:none;width:9px;height:9px;animation:sp .8s linear infinite}
 nav.tabs{max-width:920px;margin:0 auto;padding:6px 8px 0;display:flex;gap:2px;overflow-x:auto}
 nav.tabs button{
   flex:none;border:0;background:none;color:var(--muted);cursor:pointer;
@@ -242,6 +249,7 @@ main{max-width:920px;margin:0 auto;padding:16px;padding-block:18px 64px}
       <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg></span>
       <div><b>Groundwork</b><div class="tag" id="brandtag">Knee-smart daily training</div></div>
     </div>
+    <span class="syncchip" id="syncchip" title="Where your workout data is saved">On this device</span>
     <button class="hbtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19" stroke-linecap="round"/></svg>
     </button>
@@ -613,6 +621,7 @@ function starterWeight(exId){
 function freshState(){
   return {
     v:3,
+    updatedAt:0,           // last-change timestamp; drives cross-device sync (0 = never edited)
     profile:{age:37,sex:"male",heightCm:175,weightKg:87.3,targetKg:72,
       unitsBody:"kg",daysPerWeek:4,sessionMin:60,experience:"beginner",
       physioNote:"Patellar-tendon rehab in progress. Keep all knee work pain-free; follow your physio's step-downs and depths first.",
@@ -632,7 +641,66 @@ function freshState(){
 const KEY="groundwork_v3";
 let S=freshState();
 function load(){ try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);if(p&&p.profile)S=Object.assign(freshState(),p);}}catch(e){} }
-function save(){ try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
+/* save(): localStorage always; also bumps the change-clock and pushes to the cloud
+   store when connected. Pass {bump:false,cloud:false} when applying a remote update. */
+function save(opts){ opts=opts||{};
+  if(opts.bump!==false)S.updatedAt=Date.now();
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+  if(opts.cloud!==false && dbDoc && !applyingRemote)scheduleCloud();
+}
+
+/* ============ cross-device cloud sync (artifact `db` capability) ============ */
+let DB=null, UID=null, dbDoc=null, dbUnsub=null, cloudTimer=null, applyingRemote=false;
+let SYNC="init"; // init | off | connecting | synced | error
+function updateSyncUI(){
+  const c=document.getElementById("syncchip"); if(!c)return;
+  c.classList.remove("ok","warn","err","spinning");
+  const set=(txt,cls,title)=>{c.textContent=txt;if(cls)c.classList.add(cls);c.title=title;};
+  if(SYNC==="off")set("On this device","","Saved privately in this browser only. Use Download CSV to back up or move devices.");
+  else if(SYNC==="connecting"){set("Syncing…","",""),c.classList.add("spinning");}
+  else if(SYNC==="synced")set("Synced","ok","Synced to your Claude account — open this link on any device signed in as you.");
+  else if(SYNC==="error")set("Sync paused","warn","Couldn't reach the cloud store right now; your data is safe on this device and will retry.");
+  else set("On this device","","");
+}
+function scheduleCloud(){ if(!dbDoc)return; SYNC="connecting"; updateSyncUI();
+  clearTimeout(cloudTimer);
+  cloudTimer=setTimeout(()=>{ pushCloud().then(()=>{SYNC="synced";updateSyncUI();}).catch(()=>{SYNC="error";updateSyncUI();}); },900);
+}
+function pushCloud(){ if(!dbDoc)return Promise.resolve();
+  return dbDoc.set({payload:JSON.stringify(S), updatedAt:S.updatedAt||Date.now(), v:3}); }
+function adoptRemote(remote){
+  try{ const obj=JSON.parse(remote.payload); if(!obj||!obj.profile)return false;
+    applyingRemote=true; S=Object.assign(freshState(),obj); S.updatedAt=remote.updatedAt||S.updatedAt;
+    save({cloud:false,bump:false}); applyingRemote=false; render(); return true;
+  }catch(e){ applyingRemote=false; return false; }
+}
+async function initSync(){
+  const dbc=await cap("db");
+  if(!dbc){ SYNC="off"; updateSyncUI(); return; }
+  DB=dbc;
+  const usr=await cap("user");
+  try{ UID=usr? await usr.id() : null; }catch(e){ UID=null; }
+  if(!UID){ SYNC="off"; updateSyncUI(); return; }   // no private space for this viewer → stay local
+  SYNC="connecting"; updateSyncUI();
+  try{
+    dbDoc=DB.doc("data/users/"+UID+"/state");
+    const snap=await dbDoc.get();
+    if(snap.exists){
+      const remote=snap.data();
+      if((remote.updatedAt||0) > (S.updatedAt||0)) adoptRemote(remote);
+      else if((S.updatedAt||0) > (remote.updatedAt||0)) await pushCloud();
+    } else if((S.updatedAt||0) > 0){
+      await pushCloud();  // first sync of an already-used device
+    }
+    SYNC="synced"; updateSyncUI();
+    dbUnsub=dbDoc.onSnapshot(sn=>{
+      if(!sn.exists)return;
+      if(sn.metadata && sn.metadata.hasPendingWrites)return; // our own unconfirmed write
+      const remote=sn.data();
+      if((remote.updatedAt||0) > (S.updatedAt||0) && adoptRemote(remote)) toast("Updated from your other device ✓");
+    }, ()=>{ SYNC="error"; updateSyncUI(); });
+  }catch(e){ SYNC="error"; updateSyncUI(); }
+}
 
 /* ============ progression helpers ============ */
 function loadsSorted(){ // to kg for comparison
@@ -1127,8 +1195,15 @@ function renderSettings(v){
 
   // data
   const dt=el("div",{class:"card pad"});
-  dt.append(el("div",{class:"sechead"},el("h2",{},"Your data")));
-  dt.append(el("div",{class:"mini",style:"margin:8px 0"},"Everything is saved privately in this browser. Download the CSV to back it up in Google Drive or move to another device."));
+  dt.append(el("div",{class:"sechead"},el("h2",{},"Your data & sync")));
+  // live sync status line
+  const syncMsg={init:["Checking…",""],off:["On this device only","Your data is saved privately in this browser. This account/view can't use cloud sync, so use Download CSV to back up or move devices."],
+    connecting:["Syncing…","Talking to your Claude account's cloud store."],
+    synced:["✓ Synced to your Claude account","Open this same link on any device signed in as you and your data appears automatically. Still backed up on this device too."],
+    error:["Sync paused","Couldn't reach the cloud store right now — your data is safe on this device and it'll retry. Download CSV anytime as a backup."]};
+  const sm=syncMsg[SYNC]||syncMsg.init;
+  dt.append(el("div",{class:"note",style:"margin:8px 0"},el("b",{},sm[0]+" "),sm[1]));
+  dt.append(el("div",{class:"mini",style:"margin:0 0 8px"},"Cross-device sync uses a small private database tied to your Claude login (no separate cost or server). It needs you signed into the same Claude account. The CSV below is always available as an independent backup."));
   const imp=el("input",{type:"file",accept:".csv,text/csv",style:"display:none",onchange:e=>{if(e.target.files[0])importCSV(e.target.files[0]);}});
   dt.append(el("div",{class:"btnrow"},
     el("button",{class:"btn ghost",onclick:exportCSV},"⤓ Download CSV"),
@@ -1175,7 +1250,7 @@ $("#themeBtn").addEventListener("click",()=>{
 try{const th=localStorage.getItem("gw_theme");if(th)document.documentElement.setAttribute("data-theme",th);}catch(e){}
 
 /* ============ boot ============ */
-load(); render();
+load(); render(); updateSyncUI(); initSync();
 </script>
 
 </body>

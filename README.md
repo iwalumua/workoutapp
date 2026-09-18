@@ -29,6 +29,11 @@ Built around a specific set of needs:
   **per-muscle-group** top-weight/volume charts.
 - **History** — every session, expandable, with **CSV export** (save to Google
   Drive / back up) and **CSV import**.
+- **Cross-device sync** — when opened as a Claude Artifact, data syncs
+  automatically across devices signed into the same Claude account (via the
+  artifact `db` capability, stored privately under `data/users/<you>/state`).
+  If the database isn't available, the app stays device-local — nothing breaks.
+  A sync-status chip in the header shows the current state.
 - **Setup** — your details, dumbbell list, bench type, days/week, AI toggle, and a
   physio/safety note shown on every Today screen.
 
