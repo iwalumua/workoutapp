@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Groundwork — Daily Training Plan</title>
+<style>
+:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#eef0ec; --surface:#ffffff; --surface-2:#f6f7f4; --line:#dfe3dc;
+  --ink:#181d1a; --muted:#5c665f; --faint:#8b958d;
+  --accent:#127c71; --accent-strong:#0c5a52; --accent-soft:#d7ece8;
+  --amber:#c9791f; --amber-soft:#f6e6d2;
+  --good:#2f9e6b; --good-soft:#dcefe4; --warn:#c9791f; --crit:#c8483d; --crit-soft:#f7ddd8;
+  --shadow:0 1px 2px rgba(20,30,25,.06),0 6px 20px rgba(20,30,25,.06);
+  --r:14px; --r-sm:9px;
+  --dsp:"Archivo",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#10130f; --surface:#181d18; --surface-2:#1f251f; --line:#2c332b;
+    --ink:#e9efe8; --muted:#a3ada4; --faint:#727c73;
+    --accent:#3ec4b1; --accent-strong:#63d4c3; --accent-soft:#123a35;
+    --amber:#e0a24e; --amber-soft:#3a2c15;
+    --good:#4cc489; --good-soft:#14372a; --warn:#e0a24e; --crit:#e2695b; --crit-soft:#3a1d19;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10130f; --surface:#181d18; --surface-2:#1f251f; --line:#2c332b;
+  --ink:#e9efe8; --muted:#a3ada4; --faint:#727c73;
+  --accent:#3ec4b1; --accent-strong:#63d4c3; --accent-soft:#123a35;
+  --amber:#e0a24e; --amber-soft:#3a2c15;
+  --good:#4cc489; --good-soft:#14372a; --warn:#e0a24e; --crit:#e2695b; --crit-soft:#3a1d19;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--body);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--dsp);margin:0;line-height:1.15;text-wrap:balance;letter-spacing:-.01em}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button{font-family:inherit}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+a{color:var(--accent-strong)}
+
+/* header */
+header{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+  background:color-mix(in srgb,var(--surface) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.hbar{max-width:920px;margin:0 auto;padding:12px 16px 0;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+  display:grid;place-items:center;color:#fff;flex:none;box-shadow:var(--shadow)}
+.logo svg{width:17px;height:17px}
+.brand b{font-family:var(--dsp);font-weight:800;font-size:18px;letter-spacing:-.02em}
+.brand .tag{font-size:11px;color:var(--muted);margin-top:-2px}
+.hbtn{margin-left:auto;flex:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);
+  width:34px;height:34px;border-radius:9px;cursor:pointer;display:grid;place-items:center}
+.hbtn:hover{color:var(--ink)}
+nav.tabs{max-width:920px;margin:0 auto;padding:6px 8px 0;display:flex;gap:2px;overflow-x:auto}
+nav.tabs button{
+  flex:none;border:0;background:none;color:var(--muted);cursor:pointer;
+  padding:10px 12px;font-size:13.5px;font-weight:600;border-bottom:2.5px solid transparent;white-space:nowrap;
+}
+nav.tabs button[aria-current="true"]{color:var(--ink);border-color:var(--accent)}
+nav.tabs button:hover{color:var(--ink)}
+
+main{max-width:920px;margin:0 auto;padding:16px;padding-block:18px 64px}
+.view{display:flex;flex-direction:column;gap:16px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.card.pad{padding:16px}
+.sechead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.sechead h2{font-size:19px}
+.sechead .sub{color:var(--muted);font-size:12.5px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-strong)}
+
+/* today hero */
+.dayhero{padding:16px;display:flex;flex-direction:column;gap:12px;
+  background:linear-gradient(150deg,var(--accent-soft),var(--surface) 62%);border-color:transparent}
+.dayhero .row{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.daytype{font-family:var(--dsp);font-weight:800;font-size:24px;letter-spacing:-.02em}
+.daymeta{color:var(--muted);font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--muted)}
+.pill.acc{background:var(--accent-soft);border-color:transparent;color:var(--accent-strong)}
+.pill.warn{background:var(--amber-soft);border-color:transparent;color:var(--amber)}
+.pill.good{background:var(--good-soft);color:var(--good);border-color:transparent}
+.progline{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line)}
+.progline i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}
+
+.note{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:var(--r-sm);padding:11px 13px;font-size:13px;color:var(--muted)}
+.note.phys{border-left-color:var(--amber)}
+.note b{color:var(--ink)}
+
+/* block */
+.block{display:flex;flex-direction:column;gap:9px}
+.blocklabel{display:flex;align-items:center;gap:8px;margin:4px 2px 2px}
+.blocklabel h3{font-size:13.5px;letter-spacing:.02em}
+.blocklabel .n{font-size:11px;color:var(--faint);font-weight:600}
+.blocklabel .dot{width:7px;height:7px;border-radius:2px;background:var(--accent);flex:none}
+.dot.rehab{background:var(--amber)} .dot.core{background:#7a68c9} .dot.cardio{background:var(--good)} .dot.warm{background:var(--faint)}
+
+.ex{border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);overflow:hidden}
+.ex.done{border-color:var(--good);background:var(--good-soft)}
+.ex-top{display:flex;align-items:center;gap:10px;padding:11px 12px}
+.ex-check{flex:none;width:24px;height:24px;border-radius:7px;border:1.8px solid var(--line);background:var(--surface-2);
+  cursor:pointer;display:grid;place-items:center;color:transparent;transition:.12s}
+.ex.done .ex-check{background:var(--good);border-color:var(--good);color:#fff}
+.ex-name{flex:1;min-width:0}
+.ex-name b{font-size:14.5px;font-weight:600;display:block}
+.ex-scheme{font-size:12px;color:var(--muted);margin-top:1px}
+.ex-scheme .mono{color:var(--ink);font-weight:600}
+.iBtn{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent-strong);
+  background:var(--surface);cursor:pointer;font-family:var(--dsp);font-weight:800;font-size:13px;line-height:1}
+.iBtn:hover{background:var(--accent-soft)}
+.muscles{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 10px 46px}
+.mtag{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent-strong)}
+.mtag.sec{background:var(--surface-2);color:var(--muted)}
+.log{display:flex;flex-wrap:wrap;gap:8px;padding:0 12px 12px 46px;align-items:flex-end}
+.fieldlet{display:flex;flex-direction:column;gap:3px}
+.fieldlet label{font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+.fieldlet input,.fieldlet select{width:74px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
+.fieldlet.feel select{width:118px}
+.fieldlet input:focus,.fieldlet select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.painflag{font-size:11px;color:var(--crit);font-weight:600;display:flex;align-items:center;gap:5px;width:100%;margin-top:-2px}
+
+.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:700;font-size:15px;cursor:pointer;font-family:var(--dsp);
+  letter-spacing:.01em;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.btn.primary:hover{background:var(--accent-strong)}
+.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent)}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;box-shadow:var(--shadow)}
+.tile .k{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--dsp);font-weight:800;font-size:26px;margin-top:3px;letter-spacing:-.02em}
+.tile .v small{font-size:14px;font-weight:600;color:var(--muted)}
+.tile .d{font-size:11.5px;color:var(--faint);margin-top:2px}
+.bmiscale{margin-top:9px;height:7px;border-radius:999px;position:relative;
+  background:linear-gradient(90deg,#5aa9e6 0 14%,var(--good) 14% 42%,var(--amber) 42% 70%,var(--crit) 70%)}
+.bmiscale i{position:absolute;top:-4px;width:3px;height:15px;border-radius:2px;background:var(--ink);transform:translateX(-50%)}
+
+/* progress */
+.mg{display:flex;flex-direction:column;gap:6px;padding:13px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.mg .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.mg .name{font-weight:600;font-size:13.5px}
+.mg .best{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--accent-strong)}
+.mg .vol{font-size:11px;color:var(--faint)}
+.spark{width:100%;height:34px;display:block}
+.mggrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+
+/* history */
+.hitem{border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);overflow:hidden}
+.hitem summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.hitem summary::-webkit-details-marker{display:none}
+.hitem .hd{font-family:var(--mono);font-size:12px;color:var(--muted);flex:none}
+.hitem .ht{font-weight:600;font-size:13.5px;flex:1;min-width:0}
+.hitem .hv{font-size:11.5px;color:var(--faint);font-family:var(--mono)}
+.hbody{padding:0 14px 12px;border-top:1px solid var(--line)}
+.hrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;font-size:12.5px;border-bottom:1px dashed var(--line)}
+.hrow:last-child{border:0}
+.hrow .rn{color:var(--ink)} .hrow .rv{font-family:var(--mono);color:var(--muted)}
+
+/* settings */
+.frow{display:flex;flex-direction:column;gap:5px}
+.frow label{font-size:12px;font-weight:600;color:var(--muted)}
+.frow input,.frow select,.frow textarea{padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);width:100%}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px}
+.loadlist{display:flex;flex-wrap:wrap;gap:7px}
+.loadchip{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:999px;padding:5px 6px 5px 12px;font-family:var(--mono);font-size:12.5px;font-weight:600}
+.loadchip button{border:0;background:none;color:var(--faint);cursor:pointer;font-size:15px;line-height:1;padding:0 3px}
+.loadchip button:hover{color:var(--crit)}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(15,20,17,.55);z-index:60;display:none;
+  align-items:flex-end;justify-content:center;padding:0}
+.overlay.on{display:flex}
+@media(min-width:640px){.overlay{align-items:center;padding:20px}}
+.sheet{background:var(--surface);width:100%;max-width:600px;max-height:92vh;overflow:auto;
+  border-radius:18px 18px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.3)}
+@media(min-width:640px){.sheet{border-radius:18px}}
+.sheet-h{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:16px 18px;display:flex;align-items:flex-start;gap:10px;z-index:2}
+.sheet-h h3{font-size:18px}
+.sheet-h .cat{font-size:11.5px;color:var(--accent-strong);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.sheet-h .x{margin-left:auto;flex:none;border:1px solid var(--line);background:var(--surface-2);width:32px;height:32px;
+  border-radius:8px;cursor:pointer;color:var(--muted);font-size:18px}
+.sheet-b{padding:16px 18px;display:flex;flex-direction:column;gap:16px}
+.infoblock h4{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;
+  display:flex;align-items:center;gap:7px}
+.infoblock ol,.infoblock ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.infoblock p{margin:0;font-size:13.5px}
+.feelbox{background:var(--accent-soft);border-radius:var(--r-sm);padding:11px 13px;font-size:13px;color:var(--accent-strong)}
+.warnbox{background:var(--crit-soft);border-radius:var(--r-sm);padding:11px 13px;font-size:13px;color:var(--ink);border-left:3px solid var(--crit)}
+.muscleicons{display:flex;flex-wrap:wrap;gap:6px}
+
+/* toast */
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  background:var(--ink);color:var(--ground);padding:12px 18px;border-radius:11px;font-size:13.5px;font-weight:600;
+  z-index:90;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;max-width:90%}
+#toast.on{opacity:1}
+
+.empty{text-align:center;color:var(--muted);padding:26px 16px;font-size:13.5px}
+.hr{height:1px;background:var(--line);border:0;margin:2px 0}
+.mini{font-size:11.5px;color:var(--faint)}
+.center{display:flex;align-items:center;gap:8px}
+.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition:none!important}}
+</style>
+
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg></span>
+      <div><b>Groundwork</b><div class="tag" id="brandtag">Knee-smart daily training</div></div>
+    </div>
+    <button class="hbtn" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</header>
+
+<main><div class="view" id="view"></div></main>
+
+<div class="overlay" id="overlay"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ---------------------------------------------------------------------------
+   Groundwork — knee-smart, dumbbell-only daily training planner
+   Built for: 37M, 175cm, dumbbells + adjustable bench, 4 days/week, 60 min.
+   Constraints honored: patellar-tendon knee rehab + ankle strengthening.
+--------------------------------------------------------------------------- */
+
+/* ============ tiny helpers ============ */
+const $=(s,r=document)=>r.querySelector(s);
+const el=(t,a={},...kids)=>{const n=document.createElement(t);
+  for(const k in a){ if(k==="class")n.className=a[k]; else if(k==="html")n.innerHTML=a[k];
+    else if(k.startsWith("on")&&typeof a[k]==="function")n.addEventListener(k.slice(2),a[k]);
+    else if(a[k]!=null&&a[k]!==false)n.setAttribute(k,a[k]); }
+  for(const c of kids.flat()){ if(c==null||c===false)continue; n.append(c.nodeType?c:document.createTextNode(c)); }
+  return n;};
+const todayStr=(d=new Date())=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10);};
+const fmtDate=s=>{const d=new Date(s+"T00:00:00");return d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});};
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+let toastT;const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),2600);};
+
+/* ============ capability wiring (works with OR without claude.ai runtime) ============ */
+const CLAUDE=(typeof window!=="undefined")?window.claude:null;
+async function cap(name){ try{ return CLAUDE&&CLAUDE.use? await CLAUDE.use(name):null; }catch(e){ return null; } }
+
+/* ============ muscle groups ============ */
+const MG={ chest:"Chest", back:"Back", shoulders:"Shoulders", biceps:"Biceps", triceps:"Triceps",
+  quads:"Quads", hamstrings:"Hamstrings", glutes:"Glutes", calves:"Calves",
+  core:"Core", ankles:"Ankles", knees:"Knee (rehab)" };
+
+/* ============ EXERCISE LIBRARY (the info button reads from here) ============ */
+/* cat: warm | push | pull | lower | knee | ankle | core | cardio  */
+const EX={
+/* ---- warm-up / mobility ---- */
+wu_arm:{name:"Arm circles + shoulder rolls",cat:"warm",equip:"none",kneeSafe:true,primary:["shoulders"],secondary:[],
+  form:"Stand tall, arms out to the sides, make slow controlled circles.",
+  steps:["Extend both arms straight out to your sides.","Draw small circles forward for 15s, then backward for 15s.","Finish with 10 slow shoulder rolls back."],
+  feel:"A light warmth around the shoulders and upper back — this wakes up the joint, it should never pinch.",
+  wrong:"If you feel a sharp pinch at the top of the shoulder, make the circles smaller and slower.",
+  precautions:["Keep it gentle — this is a warm-up, not a stretch to force."]},
+wu_catcow:{name:"Cat–cow",cat:"warm",equip:"none",kneeSafe:true,primary:["core","back"],secondary:[],
+  form:"On hands and knees (pad under the knees), stack hands under shoulders, knees under hips.",
+  steps:["Inhale: drop the belly, lift the chest and tailbone (cow).","Exhale: round the spine, tuck the chin and tailbone (cat).","Move slowly with your breath for 8–10 rounds."],
+  feel:"A gentle mobilising stretch flowing along the whole spine.",
+  wrong:"If your knees hurt kneeling, kneel on a folded towel or do it seated on a chair.",
+  precautions:["Move through a comfortable range — no forcing at the ends."]},
+wu_hip:{name:"Hip openers (standing)",cat:"warm",equip:"none",kneeSafe:true,primary:["glutes","hamstrings"],secondary:["core"],
+  form:"Hold a wall for balance; lift one knee and open it out to the side, then back.",
+  steps:["Hold a wall or bench with one hand.","Lift one knee to hip height, rotate it outward, then back to front. 8 per side.","Then do 8 gentle leg swings front-to-back per side."],
+  feel:"Loosening around the hips and glutes.",
+  wrong:"Keep the swinging leg relaxed — if the standing knee complains, reduce the range.",
+  precautions:["Do NOT force the knee out; keep movements small and controlled."]},
+wu_ankle:{name:"Ankle circles + rockers",cat:"warm",equip:"none",kneeSafe:true,primary:["ankles"],secondary:["calves"],
+  form:"Seated or standing with support, circle the ankle then rock heel-to-toe.",
+  steps:["Lift one foot, draw 10 slow circles each direction.","Stand tall, rock gently onto your heels then your toes, 15 reps.","Repeat other side."],
+  feel:"Mobility and light activation through the ankle and lower shin — important for your rolling-ankle history.",
+  wrong:"If the ankle feels unstable standing, do this seated or hold a wall.",
+  precautions:["Bare feet or flat shoes give the best feedback here."]},
+wu_glute:{name:"Glute bridge (activation)",cat:"warm",equip:"none",kneeSafe:true,primary:["glutes"],secondary:["hamstrings","core"],
+  form:"Lie on your back, knees bent, feet flat and hip-width, arms at your sides.",
+  steps:["Push through your heels and squeeze your glutes to lift your hips.","Make a straight line from knees to shoulders — do not overarch the back.","Lower slowly. 12 light reps to switch the glutes on before training."],
+  feel:"Work in the glutes (the buttock muscles), not the lower back.",
+  wrong:"If you feel it in your lower back, tuck the pelvis slightly and drive more through the heels.",
+  precautions:["Knee-friendly: the shin stays vertical, no knee loading."]},
+
+/* ---- upper push ---- */
+db_incline:{name:"Incline dumbbell press",cat:"push",equip:"bench(incline)+db",kneeSafe:true,primary:["chest","shoulders"],secondary:["triceps"],
+  form:"Bench set to ~30°. Sit back with a dumbbell in each hand at upper-chest height, palms facing forward.",
+  steps:["Plant your feet, keep a small natural arch, shoulder blades pulled back and down.","Press the dumbbells up and slightly together until arms are nearly straight.","Lower under control until the weights are at chest level (elbows ~45° from the body).","Do not slam the dumbbells together at the top."],
+  feel:"Work across the upper chest and front of the shoulders.",
+  wrong:"Sharp pain at the front of the shoulder usually means the elbows are flaring too wide — tuck them to ~45°.",
+  precautions:["Keep wrists stacked over elbows.","Start lighter than you think while grooving the pattern."]},
+db_bench:{name:"Flat dumbbell bench press",cat:"push",equip:"bench+db",kneeSafe:true,primary:["chest"],secondary:["triceps","shoulders"],
+  form:"Lie flat, feet planted, dumbbells at chest height, palms forward.",
+  steps:["Retract the shoulder blades — imagine pinching a pencil between them.","Press up until arms are nearly straight.","Lower slowly to chest level, elbows ~45° from your torso.","Keep the movement smooth end to end."],
+  feel:"Broad tension across the mid-chest.",
+  wrong:"If the front shoulder takes over or aches, drop the elbows closer to the body and lighten the load.",
+  precautions:["Do not bounce the weights.","On heavier sets, drop the dumbbells to the sides to finish, never behind you."]},
+db_floor:{name:"Dumbbell floor press",cat:"push",equip:"db",kneeSafe:true,primary:["chest","triceps"],secondary:["shoulders"],
+  form:"Lie on the floor, knees bent, dumbbells over your chest.",
+  steps:["Lower until the backs of your upper arms lightly touch the floor.","Pause briefly, then press back up.","The floor limits your range and protects the shoulders — a great option on tender-shoulder days."],
+  feel:"Chest and triceps, with less deep shoulder stretch than a bench press.",
+  wrong:"Let the elbows rest a beat on the floor — don't bounce off it.",
+  precautions:["Ideal when you want a shoulder-friendly press."]},
+db_shoulder:{name:"Seated dumbbell shoulder press",cat:"push",equip:"bench(incline)+db",kneeSafe:true,primary:["shoulders"],secondary:["triceps"],
+  form:"Bench upright (~80–90°). Dumbbells at ear height, palms forward, core braced.",
+  steps:["Sit tall with your back supported.","Press the dumbbells overhead until arms are nearly straight.","Lower under control to ear height.","Keep ribs down — don't arch the lower back to cheat the weight up."],
+  feel:"The shoulders (deltoids), with some triceps at the top.",
+  wrong:"Lower-back arching or neck straining means the weight is too heavy — reduce it.",
+  precautions:["Keep the press slightly in front of your head, not behind the neck."]},
+db_arnold:{name:"Arnold press",cat:"push",equip:"bench(incline)+db",kneeSafe:true,primary:["shoulders"],secondary:["triceps"],
+  form:"Seated tall, start with dumbbells in front at chin height, palms facing you.",
+  steps:["Press up while rotating the palms to face forward.","Finish with arms nearly straight, palms forward.","Reverse the rotation on the way down. Smooth and controlled."],
+  feel:"All three heads of the shoulder through the rotation.",
+  wrong:"If it pinches, shorten the rotation and lighten up.",
+  precautions:["Use lighter weight than a straight shoulder press."]},
+db_lateral:{name:"Lateral raise",cat:"push",equip:"db",kneeSafe:true,primary:["shoulders"],secondary:[],
+  form:"Stand tall, slight bend in the elbows, dumbbells at your sides.",
+  steps:["Raise the dumbbells out to the sides to shoulder height.","Lead with the elbows, pinkies slightly higher than thumbs.","Pause, then lower slowly (3 seconds down).","Keep it strict — no swinging."],
+  feel:"A burn on the side ('cap') of the shoulder.",
+  wrong:"Shrugging into the neck means the traps are taking over — keep shoulders down and go lighter.",
+  precautions:["This is a light, high-rep move — ego lifting ruins it."]},
+db_fly:{name:"Incline dumbbell fly",cat:"push",equip:"bench(incline)+db",kneeSafe:true,primary:["chest"],secondary:["shoulders"],
+  form:"Bench ~30°, dumbbells above the chest, palms facing each other, soft elbows.",
+  steps:["Open the arms out in a wide arc, keeping the slight elbow bend fixed.","Lower until you feel a gentle chest stretch — no deeper.","Squeeze the chest to bring them back together.","Think 'hugging a barrel'."],
+  feel:"A stretch and squeeze across the chest — not the elbows or shoulders.",
+  wrong:"Pain in the front of the shoulder = you went too deep or elbows too straight. Shorten the range.",
+  precautions:["Use light weight; flies are a stretch move, not a strength move."]},
+db_tri_oh:{name:"Overhead dumbbell triceps extension",cat:"push",equip:"db",kneeSafe:true,primary:["triceps"],secondary:[],
+  form:"Hold one dumbbell with both hands overhead (or one per hand), elbows pointing up.",
+  steps:["Keep the elbows tucked and pointing forward, upper arms still.","Lower the weight behind your head by bending only at the elbows.","Extend back up, squeezing the triceps.","Control the lower — no dropping behind the head."],
+  feel:"A stretch then squeeze along the back of the upper arm.",
+  wrong:"Flaring elbows or arching the back means too heavy — brace the core and lighten.",
+  precautions:["Keep the neck relaxed; don't let the weight crash down."]},
+db_kickback:{name:"Triceps kickback",cat:"push",equip:"bench+db",kneeSafe:true,primary:["triceps"],secondary:[],
+  form:"Hinge forward with one hand on the bench, upper arm pinned to your side.",
+  steps:["Keep the upper arm still and parallel to the floor.","Straighten the elbow to extend the dumbbell back.","Squeeze at the top, then return slowly.","Only the forearm moves."],
+  feel:"Back of the upper arm.",
+  wrong:"If the whole arm swings, the weight is too heavy — the upper arm must stay locked in place.",
+  precautions:["Support your torso on the bench to protect the low back."]},
+pushup:{name:"Push-up (hands on bench = easier)",cat:"push",equip:"bench-opt",kneeSafe:true,primary:["chest","triceps"],secondary:["core","shoulders"],
+  form:"Hands slightly wider than shoulders. Raise the hands onto a bench to make it easier.",
+  steps:["Brace the core so the body is one straight line, head to heels.","Lower until the chest is just above the surface, elbows ~45°.","Press back up fully.","Elevate the hands on the bench if full push-ups are too hard."],
+  feel:"Chest, triceps and a working core.",
+  wrong:"Sagging hips means the core switched off — brace harder or raise the hands higher.",
+  precautions:["Knee-friendly: no knee load. Keep the neck neutral, don't crane it."]},
+
+/* ---- upper pull ---- */
+db_row:{name:"Bent-over two-arm dumbbell row",cat:"pull",equip:"db",kneeSafe:true,primary:["back"],secondary:["biceps","shoulders"],
+  form:"Feet hip-width, soft knees, hinge at the hips to ~45°, flat back, arms hanging.",
+  steps:["Keep the back flat and chest proud (do not round).","Row both dumbbells to your lower ribs, driving the elbows back.","Squeeze the shoulder blades together at the top.","Lower under control to a full stretch."],
+  feel:"The mid-back and lats working; the biceps assist.",
+  wrong:"A rounding lower back is the danger sign — reduce the weight and re-set a flat-back hinge. Keep the neck in line with the spine.",
+  precautions:["Hinge from the hips, not the knees — protects both your low back and your knee."]},
+db_row1:{name:"Single-arm dumbbell row",cat:"pull",equip:"bench+db",kneeSafe:true,primary:["back"],secondary:["biceps"],
+  form:"One knee and one hand on the bench, back flat and parallel to the floor, other foot on the ground.",
+  steps:["Let the dumbbell hang, arm straight.","Row it to your hip, elbow driving back and close to the body.","Squeeze, then lower to a full stretch.","Keep the torso still — no twisting."],
+  feel:"One side of the mid-back and lat at a time.",
+  wrong:"Twisting the torso to lift = too heavy. Keep the shoulders level.",
+  precautions:["Bench support keeps the low back safe."]},
+db_revfly:{name:"Bent-over reverse fly",cat:"pull",equip:"db",kneeSafe:true,primary:["shoulders"],secondary:["back"],
+  form:"Hinge forward, flat back, dumbbells hanging, palms facing each other, soft elbows.",
+  steps:["Raise the dumbbells out to the sides in a wide arc.","Squeeze the shoulder blades together at the top.","Keep the elbows soft and fixed — lead with the pinkies.","Lower slowly."],
+  feel:"The rear shoulders and upper back — key for posture and shoulder health.",
+  wrong:"If you feel it only in the low back, you're using momentum — brace and go lighter.",
+  precautions:["Light weight, strict form. Great posture antidote for desk work."]},
+db_pullover:{name:"Dumbbell pullover",cat:"pull",equip:"bench+db",kneeSafe:true,primary:["back","chest"],secondary:["core"],
+  form:"Lie flat, hold one dumbbell with both hands over the chest, slight elbow bend.",
+  steps:["Lower the dumbbell back over your head in an arc until you feel a stretch.","Keep the elbows only slightly bent and fixed.","Pull it back over the chest using the lats.","Move slowly and stay in a pain-free range."],
+  feel:"A big stretch through the lats and ribcage.",
+  wrong:"Shoulder pinch = you went too far back. Shorten the range.",
+  precautions:["Keep the ribs down; don't let the back arch off the bench."]},
+db_curl:{name:"Dumbbell biceps curl",cat:"pull",equip:"db",kneeSafe:true,primary:["biceps"],secondary:[],
+  form:"Stand tall, dumbbells at your sides, palms forward, elbows pinned to your ribs.",
+  steps:["Curl the weights up by bending only at the elbow.","Keep the upper arms still against your sides.","Squeeze at the top, then lower slowly (2–3s).","No swinging or leaning back."],
+  feel:"The front of the upper arm.",
+  wrong:"Swinging or elbows drifting forward = momentum. Slow down and lighten.",
+  precautions:["Keep wrists neutral, not bent back."]},
+db_hammer:{name:"Hammer curl",cat:"pull",equip:"db",kneeSafe:true,primary:["biceps"],secondary:["shoulders"],
+  form:"Same as a curl but palms face each other the whole time (thumbs up).",
+  steps:["Elbows pinned, curl the dumbbells up with a neutral grip.","Squeeze, then lower slowly.","Works the biceps plus the forearm and the muscle underneath for thickness."],
+  feel:"Biceps and the outer/forearm region.",
+  wrong:"Same as curls — no swinging.",
+  precautions:["Neutral grip is generally the most wrist-friendly."]},
+db_shrug:{name:"Dumbbell shrug",cat:"pull",equip:"db",kneeSafe:true,primary:["back"],secondary:["shoulders"],
+  form:"Stand tall, dumbbells at your sides, arms straight.",
+  steps:["Lift the shoulders straight up toward your ears.","Pause and squeeze at the top.","Lower slowly and fully.","Don't roll the shoulders — straight up and down."],
+  feel:"The upper traps (top of the shoulders / base of the neck).",
+  wrong:"Rolling the shoulders can irritate the neck — keep it a clean vertical shrug.",
+  precautions:["Keep the chin tucked and neck relaxed."]},
+
+/* ---- lower (knee-smart) ---- */
+db_rdl:{name:"Dumbbell Romanian deadlift (RDL)",cat:"lower",equip:"db",kneeSafe:true,primary:["hamstrings","glutes"],secondary:["back"],
+  form:"Stand with dumbbells in front of your thighs, feet hip-width, soft knees.",
+  steps:["Push your hips BACK (like closing a door with your backside), letting the dumbbells slide down your thighs.","Keep the back flat and the dumbbells close to your legs.","Go down until you feel a hamstring stretch (usually mid-shin) — knees stay softly bent, NOT bending further.","Drive the hips forward to stand tall and squeeze the glutes."],
+  feel:"A strong stretch in the hamstrings (back of the thighs), then glutes. This is a HIP hinge — your knees barely move, which is exactly why it's knee-friendly.",
+  wrong:"If you feel it in your lower back or your knees are bending like a squat, you're bending the knees instead of hinging the hips. Push the hips back further and keep the back flat.",
+  precautions:["Knee-safe: minimal knee bend.","Never round the back. Stop at the depth where you can keep it flat."]},
+db_sldl:{name:"Single-leg RDL (balance)",cat:"lower",equip:"db",kneeSafe:true,primary:["hamstrings","glutes"],secondary:["ankles","core"],
+  form:"Hold one dumbbell, stand on one leg with a soft knee, other leg ready to extend behind.",
+  steps:["Hinge at the hip, reaching the dumbbell toward the floor as the back leg extends behind for balance.","Keep hips level and back flat; standing knee stays softly bent.","Return to standing by squeezing the glute.","Use a wall/chair fingertip for balance if needed."],
+  feel:"Hamstring and glute of the standing leg — plus a big balance challenge for the ankle.",
+  wrong:"Wobbling wildly or the knee caving in = go slower, lighter, and use support. Keep the standing foot's arch active.",
+  precautions:["Doubles as ankle-stability training — perfect for your rolling ankles.","Start with light or no weight."]},
+db_hipthrust:{name:"Dumbbell hip thrust",cat:"lower",equip:"bench+db",kneeSafe:true,primary:["glutes"],secondary:["hamstrings"],
+  form:"Upper back resting on the bench edge, dumbbell held across the hips (pad it), feet flat.",
+  steps:["Drive through your heels and squeeze the glutes to lift the hips until the torso is parallel to the floor.","Keep the chin tucked and ribs down — the shin should be roughly vertical at the top.","Pause and squeeze hard at the top.","Lower under control."],
+  feel:"A deep contraction in the glutes.",
+  wrong:"Feeling it in the low back or hamstrings only = tuck the pelvis and drive through the heels, don't overarch.",
+  precautions:["Knee-friendly and one of the best glute builders. Pad the dumbbell on your hips for comfort."]},
+db_glutebridge:{name:"Dumbbell glute bridge (floor)",cat:"lower",equip:"db",kneeSafe:true,primary:["glutes"],secondary:["hamstrings","core"],
+  form:"Lie on your back, knees bent, feet flat, a dumbbell held across the hips.",
+  steps:["Push through the heels and lift the hips into a straight knees-to-shoulders line.","Squeeze the glutes hard at the top.","Lower slowly.","Simpler and gentler than the bench thrust — good on tender days."],
+  feel:"Glutes doing the work, not the low back.",
+  wrong:"Low-back arch = tuck the pelvis, drive the heels.",
+  precautions:["Very knee-friendly."]},
+db_goblet_box:{name:"Goblet box squat (to bench)",cat:"lower",equip:"bench+db",kneeSafe:false,primary:["quads","glutes"],secondary:["core"],
+  form:"Hold one dumbbell vertically at your chest, stand in front of the bench, feet shoulder-width.",
+  steps:["Push the hips back and sit DOWN toward the bench, keeping the chest up.","Lightly touch the bench (don't crash), keeping the weight in your heels.","Only go as deep as stays PAIN-FREE for your knee — the bench sets a safe, consistent depth.","Drive through the heels to stand, squeezing the glutes."],
+  feel:"Quads and glutes. The bench limits depth so the knee is never forced.",
+  wrong:"Any patellar-tendon pain = raise the bench (shallower), slow down, or switch to a hip thrust for the day. Knees should track over the toes, not cave inward.",
+  precautions:["KNEE WATCH: keep this pain-free and controlled. Start bodyweight, add the dumbbell only when comfortable.","Clear the exact depth/tempo with your physio."]},
+db_stepdown:{name:"Slow step-down (low step)",cat:"knee",equip:"step",kneeSafe:false,primary:["quads"],secondary:["glutes","ankles"],
+  form:"Stand on a low step (start 10–15 cm), one leg, other leg hanging off the edge.",
+  steps:["Slowly bend the standing knee to lightly tap the heel of the other foot to the floor (3s down).","Keep the knee tracking over the toes, no caving in.","Stand back up under control.","Keep it slow — this is tendon-loading, not a fast rep."],
+  feel:"Controlled load through the quad and the patellar tendon — the kind of eccentric work used in rehab.",
+  wrong:"More than mild, tolerable ache means lower the step or reduce reps. Knee caving inward = strengthen slower with support.",
+  precautions:["PHYSIO MOVE: match the step height and reps to what your physio prescribed.","Hold a wall for balance."]},
+
+/* ---- knee rehab ---- */
+rehab_wallsit:{name:"Wall sit (isometric hold)",cat:"knee",equip:"wall",kneeSafe:true,primary:["quads"],secondary:["glutes"],
+  form:"Back flat against a wall, slide down until thighs are at a comfortable angle (start shallow, ~120°).",
+  steps:["Feet shoulder-width, a step out from the wall.","Slide down to a PAIN-FREE knee angle — you don't need to reach 90°.","Hold, breathing normally, keeping the weight in your heels.","Slide back up. Build the hold time gradually."],
+  feel:"A steady burn in the quads. Isometric holds like this are a proven, gentle way to load and calm an irritated patellar tendon.",
+  wrong:"Sharp knee pain = come up higher (shallower angle). A working-muscle burn is fine; joint pain is not.",
+  precautions:["KNEE REHAB STAPLE: find the depth that's pain-free.","Great to do on most days — often helps tendon pain."]},
+rehab_slr:{name:"Straight-leg raise",cat:"knee",equip:"none",kneeSafe:true,primary:["quads"],secondary:["core"],
+  form:"Lie on your back, one knee bent (foot flat), the other leg straight.",
+  steps:["Tighten the thigh of the straight leg and lock the knee.","Keeping it dead straight, lift the leg to the height of the bent knee.","Lower slowly. The knee never bends — so there's no joint stress.","Add a light ankle weight or dumbbell on the thigh later to progress."],
+  feel:"The front-thigh quad (especially the inner part near the knee) working with zero knee bending.",
+  wrong:"If the leg bends as you lift, you're going too high or too heavy — keep it locked straight.",
+  precautions:["KNEE-SAFE strengthener: no knee movement at all."]},
+rehab_quadset:{name:"Quad set (isometric)",cat:"knee",equip:"none",kneeSafe:true,primary:["quads"],secondary:[],
+  form:"Sit or lie with the leg straight out, a small rolled towel under the knee.",
+  steps:["Press the back of the knee down into the towel by tightening the thigh.","You should see the kneecap pull up slightly.","Hold 5–10 seconds, then relax.","Simple, safe reactivation of the quad."],
+  feel:"The quad tightening around the kneecap — no movement, no pain.",
+  wrong:"There's almost nothing to get wrong; if you can't feel the quad tighten, press harder into the towel.",
+  precautions:["A gentle everyday-safe drill your physio likely knows well."]},
+
+/* ---- ankle rehab (your rolling ankles) ---- */
+ankle_balance:{name:"Single-leg balance",cat:"ankle",equip:"none",kneeSafe:true,primary:["ankles"],secondary:["core","calves"],
+  form:"Stand on one foot near a wall, soft knee, weight spread across the foot.",
+  steps:["Balance on one leg, keeping the arch active (don't let the ankle roll out).","Hold, building up the time. Progress by closing your eyes or standing on a cushion.","Switch legs.","Keep small ankle corrections smooth, not jerky."],
+  feel:"Constant small work through the ankle and foot — this trains the reflexes that stop your ankle rolling.",
+  wrong:"If you're grabbing the wall constantly, that's fine at first — reduce support over weeks.",
+  precautions:["ANKLE STABILITY: the single most useful drill for ankles that roll.","Always have a wall within reach."]},
+ankle_evert:{name:"Ankle eversion (peroneals)",cat:"ankle",equip:"db-opt",kneeSafe:true,primary:["ankles"],secondary:["calves"],
+  form:"Seated, leg out. Turn the sole of the foot OUTWARD (little toe leads up and out) against light resistance.",
+  steps:["With a light resistance band or just controlled effort, turn the foot outward.","Hold briefly at the end, then return slowly.","These outer-ankle muscles (peroneals) are the ones that fail when an ankle rolls."],
+  feel:"Work on the OUTER side of the shin/ankle.",
+  wrong:"Moving the whole leg instead of just the ankle = isolate the foot, keep the shin still.",
+  precautions:["ANKLE STABILITY: directly strengthens the roll-preventing muscles.","A light band makes this much more effective — optional to add."]},
+ankle_heelwalk:{name:"Heel walks (tibialis)",cat:"ankle",equip:"none",kneeSafe:true,primary:["ankles"],secondary:[],
+  form:"Stand tall, lift the toes so you're on your heels.",
+  steps:["Pull the toes up hard and walk forward on your heels for ~15 steps.","Keep tall posture.","Turn around and walk back.","Builds the front-shin muscle that controls the foot."],
+  feel:"A burn on the FRONT of the shin (tibialis anterior).",
+  wrong:"If you drop onto flat feet, slow down — stay high on the heels.",
+  precautions:["Do it on a flat, clear floor."]},
+ankle_calf1:{name:"Single-leg calf raise",cat:"ankle",equip:"none",kneeSafe:true,primary:["calves"],secondary:["ankles"],
+  form:"Stand on one foot near a wall for balance, ball of the foot on the floor (or edge of a step).",
+  steps:["Rise up onto the ball of the foot as high as you can.","Pause at the top, then lower slowly (3s).","Keep the ankle tracking straight — don't let it roll outward.","Switch legs."],
+  feel:"The calf working, plus ankle-control demand.",
+  wrong:"Ankle rolling outward at the top = lower the range and focus on a straight line.",
+  precautions:["Also strengthens the ankle. Hold a wall as needed."]},
+
+/* ---- core ---- */
+core_plank:{name:"Front plank",cat:"core",equip:"none",kneeSafe:true,primary:["core"],secondary:["shoulders"],
+  form:"Forearms under the shoulders, body in one straight line from head to heels.",
+  steps:["Brace the abs and squeeze the glutes.","Keep the hips level — not sagging, not piked up.","Breathe normally and hold.","Stop when your form breaks, not when it 'hurts'."],
+  feel:"A deep, even brace across the whole midsection.",
+  wrong:"Sagging hips (low back working) or a piked butt = reset the straight line; shorten the hold.",
+  precautions:["Knee-friendly. If wrists bother you, stay on forearms."]},
+core_sideplank:{name:"Side plank",cat:"core",equip:"none",kneeSafe:true,primary:["core"],secondary:["shoulders"],
+  form:"On one forearm, elbow under the shoulder, body in a straight diagonal line.",
+  steps:["Stack or stagger the feet and lift the hips.","Keep a straight line head to feet; don't let the hips drop.","Hold, then switch sides.","Drop the bottom knee to the floor to make it easier."],
+  feel:"The side of the trunk (obliques).",
+  wrong:"Hips sagging toward the floor = lift them back into line or drop to the knee version.",
+  precautions:["Knee-friendly (bent-knee version keeps knees comfortable)."]},
+core_deadbug:{name:"Dead bug",cat:"core",equip:"none",kneeSafe:true,primary:["core"],secondary:[],
+  form:"Lie on your back, arms pointing at the ceiling, knees bent over the hips (tabletop).",
+  steps:["Press the low back gently into the floor and keep it there.","Slowly lower the opposite arm and leg toward the floor.","Return and switch sides.","The low back must stay flat the whole time."],
+  feel:"Deep core control — no strain anywhere.",
+  wrong:"If the low back arches off the floor, reduce the range — that arch is the mistake to avoid.",
+  precautions:["Very safe; excellent for protecting the low back on hinge days."]},
+core_birddog:{name:"Bird dog",cat:"core",equip:"none",kneeSafe:true,primary:["core"],secondary:["glutes","back"],
+  form:"On hands and knees (pad the knees), spine neutral.",
+  steps:["Extend the opposite arm and leg to a straight line, no higher than the torso.","Keep the hips square and the back flat — don't rotate.","Hold briefly, return, and switch sides slowly.","Balance and anti-rotation control."],
+  feel:"A steady core and glute engagement with balance demand.",
+  wrong:"Twisting the hips or arching the back = go slower and lower the limbs less.",
+  precautions:["Kneel on a towel for knee comfort."]},
+
+/* ---- cardio (low-impact, knee-aware) ---- */
+cardio_walk:{name:"Brisk walk (finisher)",cat:"cardio",equip:"none",kneeSafe:true,primary:["core"],secondary:["calves","glutes"],
+  form:"Walk at a pace where you can talk but not sing.",
+  steps:["Keep a tall posture and a purposeful pace.","Land midfoot and roll through — smooth, quiet steps.","Build the duration over weeks.","Great low-impact fat-loss tool that's kind to the knee."],
+  feel:"Elevated breathing and warmth, no joint pounding.",
+  wrong:"Knee ache while walking = shorten the stride and slow the pace.",
+  precautions:["Low-impact by design — safe for the patellar tendon.","Supportive shoes help your ankles."]},
+cardio_incline:{name:"Incline walk / gentle stairs",cat:"cardio",equip:"none",kneeSafe:true,primary:["glutes","calves"],secondary:["quads","hamstrings"],
+  form:"Walk uphill or up stairs at a steady, controlled pace.",
+  steps:["Push through the whole foot and use the glutes to drive up.","Keep the pace steady and the knee comfortable.","Going UP loads the muscles with little knee stress; go DOWN slowly and carefully.","Use a handrail on stairs."],
+  feel:"Glutes and calves working; breathing up.",
+  wrong:"Knee pain going downhill/downstairs is common — take those slow and short, or avoid the down portion.",
+  precautions:["KNEE WATCH: uphill is friendlier than downhill. Keep it pain-free."]},
+cardio_march:{name:"Marching / step-touch intervals",cat:"cardio",equip:"none",kneeSafe:true,primary:["core"],secondary:["calves"],
+  form:"March on the spot or step side-to-side, driving the arms.",
+  steps:["March with purpose, lifting the knees to a comfortable height.","Alternate 40s of faster marching with 20s easy, for several rounds.","Fully low-impact — no jumping.","Keep it smooth and rhythmic."],
+  feel:"Heart rate up, no impact on the knees.",
+  wrong:"Don't turn it into jumping — keep one foot down at all times to stay low-impact.",
+  precautions:["A joint-friendly conditioning option indoors."]}
+};
+
+/* ============ SPLIT TEMPLATES (4-day: PushA / LowerA / PullB / LowerB) ============ */
+/* item: [exId, sets, reps]  reps can be a number-range string or a "hold" like "30s" */
+const BLOCKS_WARM=(a)=>({label:"Warm-up & mobility",kind:"warm",items:a.map(id=>[id,1,EX[id].cat==="warm"?"45s":"10"])});
+const SPLIT=[
+ {key:"A",name:"Upper Body — Push",focus:"Chest · Shoulders · Triceps",blocks:[
+   BLOCKS_WARM(["wu_arm","wu_catcow","wu_ankle"]),
+   {label:"Main lifts",kind:"main",items:[["db_incline",4,"8–12"],["db_shoulder",3,"8–12"]]},
+   {label:"Accessories",kind:"main",items:[["db_lateral",3,"12–15"],["db_tri_oh",3,"10–14"],["pushup",2,"AMRAP"]]},
+   {label:"Ankle stability",kind:"ankle",items:[["ankle_calf1",2,"12"],["ankle_balance",2,"30s"]]},
+   {label:"Core",kind:"core",items:[["core_plank",3,"30–45s"]]},
+   {label:"Finisher — cardio",kind:"cardio",items:[["cardio_walk",1,"12 min"]]}
+ ]},
+ {key:"B",name:"Lower Body — Hinge & Knee Rehab",focus:"Hamstrings · Glutes · Quads (knee-safe)",blocks:[
+   BLOCKS_WARM(["wu_hip","wu_glute","wu_ankle"]),
+   {label:"Main lifts",kind:"main",items:[["db_rdl",4,"8–12"],["db_hipthrust",3,"10–12"]]},
+   {label:"Quads (pain-free)",kind:"main",items:[["db_goblet_box",3,"8–12"],["db_sldl",2,"8 / side"]]},
+   {label:"Knee rehab",kind:"knee",items:[["rehab_wallsit",3,"20–40s"],["rehab_slr",2,"12 / side"]]},
+   {label:"Core",kind:"core",items:[["core_deadbug",3,"8 / side"]]},
+   {label:"Finisher — cardio",kind:"cardio",items:[["cardio_walk",1,"12 min"]]}
+ ]},
+ {key:"C",name:"Upper Body — Pull",focus:"Back · Rear delts · Biceps",blocks:[
+   BLOCKS_WARM(["wu_arm","wu_catcow"]),
+   {label:"Main lifts",kind:"main",items:[["db_row",4,"8–12"],["db_row1",3,"10 / side"]]},
+   {label:"Accessories",kind:"main",items:[["db_revfly",3,"12–15"],["db_curl",3,"10–12"],["db_hammer",2,"10–12"]]},
+   {label:"Ankle stability",kind:"ankle",items:[["ankle_evert",2,"15 / side"],["ankle_heelwalk",2,"15 steps"]]},
+   {label:"Core",kind:"core",items:[["core_sideplank",2,"25s / side"]]},
+   {label:"Finisher — cardio",kind:"cardio",items:[["cardio_walk",1,"12 min"]]}
+ ]},
+ {key:"D",name:"Lower Body — Glutes & Conditioning",focus:"Glutes · Hamstrings · Calves + rehab",blocks:[
+   BLOCKS_WARM(["wu_hip","wu_glute","wu_ankle"]),
+   {label:"Main lifts",kind:"main",items:[["db_glutebridge",4,"12–15"],["db_rdl",3,"10–12"]]},
+   {label:"Calves & tendon",kind:"main",items:[["ankle_calf1",3,"12 / side"],["db_stepdown",2,"8 / side"]]},
+   {label:"Knee rehab",kind:"knee",items:[["rehab_wallsit",2,"25–45s"],["rehab_quadset",2,"8 holds"]]},
+   {label:"Core",kind:"core",items:[["core_birddog",3,"8 / side"]]},
+   {label:"Finisher — conditioning",kind:"cardio",items:[["cardio_incline",1,"10 min"]]}
+ ]}
+];
+/* active-recovery / rest day */
+const RECOVERY={key:"R",name:"Active Recovery",focus:"Walk · mobility · rehab — keep the tendon moving",blocks:[
+   {label:"Mobility",kind:"warm",items:[["wu_catcow",1,"8"],["wu_hip",1,"8 / side"],["wu_ankle",1,"10 / side"]]},
+   {label:"Rehab (do these often)",kind:"knee",items:[["rehab_wallsit",3,"20–40s"],["ankle_balance",2,"30s / side"],["ankle_evert",2,"15 / side"]]},
+   {label:"Easy cardio",kind:"cardio",items:[["cardio_walk",1,"20–30 min"]]}
+]};
+
+/* ============ default state ============ */
+const DEFAULT_LOADS=[{v:5,u:"lb"},{v:10,u:"lb"},{v:15,u:"lb"},{v:20,u:"lb"}];
+function starterWeight(exId){
+  // sensible pain-free starting dumbbell for each move (kept light; user edits later)
+  const map={db_incline:15,db_bench:15,db_floor:15,db_shoulder:10,db_arnold:10,db_lateral:5,db_fly:10,db_tri_oh:15,db_kickback:10,
+    db_row:20,db_row1:20,db_revfly:5,db_pullover:15,db_curl:10,db_hammer:10,db_shrug:20,
+    db_rdl:20,db_sldl:10,db_hipthrust:20,db_glutebridge:20,db_goblet_box:15,db_stepdown:0,
+    ankle_evert:0,ankle_calf1:0};
+  return map[exId]!=null?map[exId]:0;
+}
+function freshState(){
+  return {
+    v:3,
+    profile:{age:37,sex:"male",heightCm:175,weightKg:87.3,targetKg:72,
+      unitsBody:"kg",daysPerWeek:4,sessionMin:60,experience:"beginner",
+      physioNote:"Patellar-tendon rehab in progress. Keep all knee work pain-free; follow your physio's step-downs and depths first.",
+      aiEnabled:true},
+    equipment:{loads:JSON.parse(JSON.stringify(DEFAULT_LOADS)),bench:"incline"},
+    progress:{},              // exId -> {weight}
+    cycle:0,                  // next split index 0..3
+    plan:null,                // today's plan {date,dayKey,name,focus,blocks:[{label,kind,items:[{...}]}],submitted,coachNote,aiUsed}
+    tomorrow:null,            // prepared next-day preview
+    history:[],               // [{date,name,focus,volumeByMuscle,entries,bodyweightKg,feelAvg,coachNote}]
+    weightLog:[{date:todayStr(),kg:87.3}],
+    started:todayStr()
+  };
+}
+
+/* ============ persistence ============ */
+const KEY="groundwork_v3";
+let S=freshState();
+function load(){ try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);if(p&&p.profile)S=Object.assign(freshState(),p);}}catch(e){} }
+function save(){ try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
+
+/* ============ progression helpers ============ */
+function loadsSorted(){ // to kg for comparison
+  const toKg=l=>l.u==="lb"?l.v*0.4536:l.v;
+  return [...S.equipment.loads].sort((a,b)=>toKg(a)-toKg(b));
+}
+function loadLabel(exId){
+  const w=curWeight(exId);
+  if(w===0||w==null)return "Bodyweight";
+  const l=S.equipment.loads.find(x=>x.v===w)||S.equipment.loads[0];
+  return w+" "+(l?l.u:"lb");
+}
+function curWeight(exId){
+  if(S.progress[exId]&&S.progress[exId].weight!=null)return S.progress[exId].weight;
+  // snap starter to nearest available load value
+  const start=starterWeight(exId);
+  if(start===0)return 0;
+  const vals=S.equipment.loads.map(l=>l.v);
+  let best=vals[0]; for(const v of vals) if(Math.abs(v-start)<Math.abs(best-start))best=v;
+  return best;
+}
+function nextLoadUp(exId){
+  const w=curWeight(exId); const vals=[...new Set(S.equipment.loads.map(l=>l.v))].sort((a,b)=>a-b);
+  const nx=vals.find(v=>v>w); return nx!=null?nx:w;
+}
+function setWeight(exId,w){ (S.progress[exId]=S.progress[exId]||{}).weight=w; }
+
+/* ============ plan generation ============ */
+function isTrainingDay(dateStr){
+  const dow=new Date(dateStr+"T00:00:00").getDay(); // 0 Sun .. 6 Sat
+  const n=S.profile.daysPerWeek;
+  const sets={3:[1,3,5],4:[1,2,4,5],5:[1,2,3,4,5],6:[1,2,3,4,5,6]};
+  return (sets[n]||sets[4]).includes(dow);
+}
+function buildPlan(dateStr,splitIndex){
+  const tmpl = splitIndex==null?RECOVERY:SPLIT[splitIndex%4];
+  const blocks=tmpl.blocks.map(b=>({label:b.label,kind:b.kind,items:b.items.map(([exId,sets,reps])=>{
+    const w=curWeight(exId);
+    return {exId,sets,reps,weight:w,done:false,
+      log:{weightUsed:(w||""),repsDone:"",feel:"",pain:false,notes:""}};
+  })}));
+  return {date:dateStr,dayKey:tmpl.key,name:tmpl.name,focus:tmpl.focus,isRecovery:splitIndex==null,
+    blocks,submitted:false,coachNote:"",aiUsed:false};
+}
+function ensurePlan(){
+  const t=todayStr();
+  if(S.plan&&S.plan.date===t)return;
+  // if there is a prepared tomorrow matching today, use it
+  if(S.tomorrow&&S.tomorrow.date===t){ S.plan=S.tomorrow; S.tomorrow=null; save(); return; }
+  // was the previous plan a training day that never got submitted? repeat it (don't skip a workout)
+  let splitIdx;
+  if(isTrainingDay(t)){
+    if(S.plan&&!S.plan.submitted&&!S.plan.isRecovery){
+      // keep the same split index -> repeat missed session
+      splitIdx=(S.cycle-1+4)%4;
+      S.plan=buildPlan(t,splitIdx);
+      S.plan.coachNote="Repeating your last session — you didn't log the previous one, so nothing was skipped. When you submit, tomorrow adapts.";
+      save();return;
+    }
+    splitIdx=S.cycle%4;
+  }else{
+    splitIdx=null; // recovery
+  }
+  S.plan=buildPlan(t,splitIdx);
+  save();
+}
+
+/* ============ health calcs ============ */
+function health(){
+  const h=S.profile.heightCm/100, w=S.profile.weightKg, t=S.profile.targetKg;
+  const bmi=w/(h*h);
+  const lo=18.5*h*h, hi=24.9*h*h, ideal=22.5*h*h;
+  let cat="Healthy",catClass="good";
+  if(bmi<18.5){cat="Underweight";catClass="warn";}
+  else if(bmi<25){cat="Healthy";catClass="good";}
+  else if(bmi<30){cat="Overweight";catClass="warn";}
+  else{cat="Obese";catClass="crit";}
+  const start=(S.weightLog[0]&&S.weightLog[0].kg)||w;
+  const lost=Math.max(0,start-w), toGo=Math.max(0,w-t), totalGoal=Math.max(0.1,start-t);
+  const pct=clamp(lost/totalGoal*100,0,100);
+  return {bmi,lo,hi,ideal,cat,catClass,start,lost,toGo,pct,pos:clamp((bmi-15)/(35-15)*100,2,98)};
+}
+
+/* ============ analysis (rules + optional Claude) ============ */
+function ruleAnalyze(plan){
+  // returns {note, adjustments:{exId:'up'|'keep'|'down'|'swap'}, painFlags:[]}
+  const adj={}, painEx=[]; let easy=0,hard=0,logged=0;
+  plan.blocks.forEach(b=>b.items.forEach(it=>{
+    const f=it.log.feel; if(it.log.pain)painEx.push(EX[it.exId].name);
+    if(f){logged++;}
+    if(it.log.pain){adj[it.exId]="swap";return;}
+    if(f==="easy"){adj[it.exId]="up";easy++;}
+    else if(f==="hard"||f==="failed"){adj[it.exId]="down";hard++;}
+    else if(f==="good"){adj[it.exId]="keep";}
+  }));
+  let note;
+  if(logged===0){note="No effort logged today. Tomorrow's plan stays the same so you can pick it back up.";}
+  else if(painEx.length){note="You flagged discomfort on "+painEx.join(", ")+". I've swapped or lightened those and kept everything knee-safe — mention this to your physio if it persists.";}
+  else if(easy>hard){note="Strong session — several lifts felt easy, so I nudged those up a notch for tomorrow. Progressive overload in action.";}
+  else if(hard>easy){note="That was a grind today. I eased the toughest lifts slightly so tomorrow's quality stays high. Recovery is part of progress.";}
+  else{note="Solid, dialled-in session. I kept the loads and added small rep targets where it made sense. Consistency is winning here.";}
+  return {note,adjustments:adj,painFlags:painEx};
+}
+function applyAdjustments(adj){
+  for(const exId in adj){
+    const a=adj[exId], w=curWeight(exId);
+    if(a==="up"){ if(w>0)setWeight(exId,nextLoadUp(exId)); }
+    else if(a==="down"){ const vals=[...new Set(S.equipment.loads.map(l=>l.v))].sort((x,y)=>x-y);
+      const prev=[...vals].reverse().find(v=>v<w); if(prev!=null&&w>0)setWeight(exId,prev); }
+    else if(a==="swap"){ if(w>0){const vals=[...new Set(S.equipment.loads.map(l=>l.v))].sort((x,y)=>x-y);
+      const prev=[...vals].reverse().find(v=>v<w); setWeight(exId,prev!=null?prev:0);} }
+  }
+}
+async function aiAnalyze(plan){
+  const sample=await cap("sample"); if(!sample)return null;
+  const logs=[];
+  plan.blocks.forEach(b=>b.items.forEach(it=>{
+    logs.push({exercise:EX[it.exId].name,prescribed:it.sets+"x"+it.reps,weight:it.log.weightUsed,
+      repsDone:it.log.repsDone,feel:it.log.feel||"not logged",pain:!!it.log.pain,notes:it.log.notes||""});
+  }));
+  const p=S.profile, hh=health();
+  const prompt=[
+    "You are a certified strength coach writing a short, warm, practical note to a client.",
+    "Client: "+p.age+"y "+p.sex+", "+p.heightCm+"cm, "+p.weightKg+"kg, BMI "+hh.bmi.toFixed(1)+", goal ~"+p.targetKg+"kg (fat loss + strength).",
+    "IMPORTANT constraints: patellar-tendon knee rehab (all knee work must stay pain-free, follow physio), and ankles that roll (needs stability work). Equipment: dumbbells + adjustable bench only.",
+    "Today's session: "+plan.name+".",
+    "Logged performance (JSON):",
+    JSON.stringify(logs),
+    "Write a 2-4 sentence coaching note: acknowledge today, and say clearly how tomorrow should change (progress, hold, or back off). If any pain was flagged, prioritise safety and mention the physio. Be specific and encouraging, no medical claims, no markdown."
+  ].join("\n");
+  try{
+    const r=await sample(prompt,{modelTier:"default"});
+    return (r&&r.text)?r.text.trim():null;
+  }catch(e){ return null; }
+}
+
+/* ============ submit ============ */
+async function submitDay(btn){
+  const plan=S.plan;
+  const ana=ruleAnalyze(plan);
+  // record history
+  const volumeByMuscle={}; const entries=[]; let feelSum=0,feelN=0;
+  const feelScore={failed:1,hard:2,good:3,easy:4};
+  plan.blocks.forEach(b=>b.items.forEach(it=>{
+    const ex=EX[it.exId]; const w=parseFloat(it.log.weightUsed)||0; const reps=parseFloat(it.log.repsDone)||0;
+    entries.push({exId:it.exId,name:ex.name,sets:it.sets,prescribed:it.reps,weightUsed:it.log.weightUsed||"",
+      repsDone:it.log.repsDone||"",feel:it.log.feel||"",pain:!!it.log.pain,unit:(S.equipment.loads[0]||{}).u||"lb"});
+    if(it.log.feel){feelSum+=feelScore[it.log.feel]||3;feelN++;}
+    const vol=(w||1)*(reps||1)*it.sets;
+    ex.primary.forEach(m=>{volumeByMuscle[m]=(volumeByMuscle[m]||0)+vol;});
+  }));
+  // AI note if enabled + available (falls back to rules)
+  let coachNote=ana.note, aiUsed=false;
+  if(S.profile.aiEnabled){
+    if(btn){btn.disabled=true;btn.innerHTML='<span class="spin"></span> AI coach analysing…';}
+    const ai=await aiAnalyze(plan);
+    if(ai){coachNote=ai;aiUsed=true;}
+  }
+  // apply progression
+  applyAdjustments(ana.adjustments);
+  plan.submitted=true; plan.coachNote=coachNote; plan.aiUsed=aiUsed;
+  S.history.unshift({date:plan.date,name:plan.name,focus:plan.focus,volumeByMuscle,entries,
+    bodyweightKg:S.profile.weightKg,feelAvg:feelN?feelSum/feelN:null,coachNote,aiUsed});
+  // advance cycle only for real training days
+  if(!plan.isRecovery)S.cycle=(S.cycle+1)%4;
+  // prepare tomorrow
+  const tmr=new Date(); tmr.setDate(tmr.getDate()+1); const tstr=todayStr(tmr);
+  const tIdx=isTrainingDay(tstr)?S.cycle%4:null;
+  S.tomorrow=buildPlan(tstr,tIdx);
+  S.tomorrow.coachNote=coachNote;
+  save();
+  render();
+  toast(aiUsed?"Day submitted — AI planned tomorrow ✓":"Day submitted — tomorrow is ready ✓");
+}
+
+/* ============ CSV export / import ============ */
+function buildCSV(){
+  const rows=[["date","session","exercise","primary_muscle","sets","prescribed_reps","weight_used","unit","reps_done","feel","pain","bodyweight_kg","ai_used"]];
+  S.history.forEach(h=>h.entries.forEach(e=>{
+    rows.push([h.date,h.name,e.name,(EX[e.exId]?EX[e.exId].primary.join("|"):""),e.sets,e.prescribed,e.weightUsed,e.unit,e.repsDone,e.feel,e.pain?"yes":"no",h.bodyweightKg,h.aiUsed?"yes":"no"]);
+  }));
+  S.weightLog.forEach(w=>rows.push([w.date,"BODYWEIGHT","","",""," ","",""," ","","",w.kg,""]));
+  return rows.map(r=>r.map(c=>{c=String(c==null?"":c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(",")).join("\n");
+}
+async function exportCSV(){
+  const csv=buildCSV(); const fn="groundwork-history-"+todayStr()+".csv";
+  const dl=await cap("downloads");
+  if(dl){ try{ await dl.save({filename:fn,data:csv}); toast("Saved "+fn+" ✓"); return;}catch(e){} }
+  // fallback for standalone (non-artifact) use
+  try{const b=new Blob([csv],{type:"text/csv"});const u=URL.createObjectURL(b);const a=el("a",{href:u,download:fn});document.body.append(a);a.click();a.remove();URL.revokeObjectURL(u);toast("Downloaded "+fn);}
+  catch(e){ toast("Export not available in this view."); }
+}
+function importCSV(file){
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const lines=String(rd.result).split(/\r?\n/).filter(Boolean);
+      const head=lines.shift().split(",");
+      const idx=n=>head.indexOf(n);
+      const byDate={};
+      lines.forEach(line=>{
+        const c=line.match(/("([^"]|"")*"|[^,]*)(,|$)/g).map(x=>x.replace(/,$/,"").replace(/^"|"$/g,"").replace(/""/g,'"'));
+        const date=c[idx("date")], sess=c[idx("session")];
+        if(sess==="BODYWEIGHT"){ const kg=parseFloat(c[idx("bodyweight_kg")]); if(kg)S.weightLog.push({date,kg}); return; }
+        (byDate[date]=byDate[date]||{date,name:sess,focus:"",entries:[],volumeByMuscle:{},bodyweightKg:parseFloat(c[idx("bodyweight_kg")])||S.profile.weightKg,aiUsed:c[idx("ai_used")]==="yes"});
+        byDate[date].entries.push({exId:"",name:c[idx("exercise")],sets:c[idx("sets")],prescribed:c[idx("prescribed_reps")],
+          weightUsed:c[idx("weight_used")],unit:c[idx("unit")],repsDone:c[idx("reps_done")],feel:c[idx("feel")],pain:c[idx("pain")]==="yes"});
+      });
+      const imported=Object.values(byDate);
+      if(imported.length){ S.history=imported.sort((a,b)=>b.date<a.date?-1:1).concat(S.history); }
+      // dedupe weightLog by date
+      const seen={}; S.weightLog=S.weightLog.filter(w=>seen[w.date]?false:(seen[w.date]=true));
+      S.weightLog.sort((a,b)=>a.date<b.date?-1:1);
+      save(); render(); toast("Imported "+imported.length+" session(s) ✓");
+    }catch(e){ toast("Couldn't read that CSV — check the format."); }
+  };
+  rd.readAsText(file);
+}
+
+/* ============ RENDER ============ */
+let TAB="today";
+const TABS=[["today","Today"],["week","Plan"],["progress","Progress"],["history","History"],["settings","Setup"]];
+function renderTabs(){
+  const n=$("#tabs"); n.innerHTML="";
+  TABS.forEach(([k,l])=>n.append(el("button",{"aria-current":String(TAB===k),onclick:()=>{TAB=k;render();window.scrollTo(0,0);}},l)));
+}
+function render(){
+  ensurePlan(); renderTabs();
+  const v=$("#view"); v.innerHTML="";
+  if(TAB==="today")renderToday(v);
+  else if(TAB==="week")renderWeek(v);
+  else if(TAB==="progress")renderProgress(v);
+  else if(TAB==="history")renderHistory(v);
+  else renderSettings(v);
+}
+
+function muscleTags(ex){
+  const w=el("div",{class:"muscles"});
+  ex.primary.forEach(m=>w.append(el("span",{class:"mtag"},MG[m]||m)));
+  ex.secondary.forEach(m=>w.append(el("span",{class:"mtag sec"},MG[m]||m)));
+  return w;
+}
+function exCard(it){
+  const ex=EX[it.exId];
+  const card=el("div",{class:"ex"+(it.done?" done":"")});
+  const check=el("button",{class:"ex-check","aria-label":"Mark done",onclick:()=>{it.done=!it.done;save();card.classList.toggle("done",it.done);check.innerHTML=it.done?"✓":"";}},it.done?"✓":"");
+  const info=el("button",{class:"iBtn",title:"How to do this exercise",onclick:()=>openInfo(it.exId)},"i");
+  const schemeTxt = it.reps.toString().match(/min|s$|steps|AMRAP|hold/i)? it.reps : (it.reps);
+  const isWeighted = curWeight(it.exId)>0;
+  const name=el("div",{class:"ex-name"},
+    el("b",{},ex.name),
+    el("div",{class:"ex-scheme"}, el("span",{class:"mono"},it.sets+" × "+it.reps), isWeighted?"  ·  target "+loadLabel(it.exId):"  ·  bodyweight"));
+  card.append(el("div",{class:"ex-top"},check,name,info));
+  card.append(muscleTags(ex));
+  // log fields
+  const log=el("div",{class:"log"});
+  if(isWeighted){
+    const wsel=el("select",{onchange:e=>{it.log.weightUsed=e.target.value;save();}});
+    const vals=[0,...new Set(S.equipment.loads.map(l=>l.v))].filter((x,i,a)=>a.indexOf(x)===i).sort((a,b)=>a-b);
+    vals.forEach(vv=>{const opt=el("option",{value:vv},vv===0?"BW":vv+" "+((S.equipment.loads[0]||{}).u||"lb"));if(String(vv)===String(it.log.weightUsed))opt.selected=true;wsel.append(opt);});
+    log.append(el("div",{class:"fieldlet"},el("label",{},"Weight used"),wsel));
+  }
+  const reps=el("input",{type:"text",inputmode:"numeric",placeholder:"e.g. 10",value:it.log.repsDone,oninput:e=>{it.log.repsDone=e.target.value;}, onchange:()=>save()});
+  log.append(el("div",{class:"fieldlet"},el("label",{},"Reps / time done"),reps));
+  const feel=el("select",{class:"",onchange:e=>{it.log.feel=e.target.value;save();}});
+  [["","How did it feel?"],["easy","Easy — too light"],["good","Just right"],["hard","Hard but done"],["failed","Couldn't finish"]].forEach(([vv,lb])=>{const o=el("option",{value:vv},lb);if(vv===it.log.feel)o.selected=true;feel.append(o);});
+  log.append(el("div",{class:"fieldlet feel"},el("label",{},"Effort"),feel));
+  const pain=el("input",{type:"checkbox",style:"width:18px;height:18px",checked:it.log.pain?"checked":null,onchange:e=>{it.log.pain=e.target.checked;save();painline.hidden=!e.target.checked;}});
+  log.append(el("div",{class:"fieldlet"},el("label",{},"Knee/joint pain?"),el("div",{style:"height:34px;display:flex;align-items:center;gap:6px"},pain,el("span",{class:"mini"},"tick if it hurt"))));
+  const painline=el("div",{class:"painflag",hidden:it.log.pain?null:true},"⚠ Flagged — tomorrow will lighten/swap this and keep it safe. Tell your physio if it keeps happening.");
+  log.append(painline);
+  card.append(log);
+  return card;
+}
+function renderToday(v){
+  const p=S.plan, h=health();
+  const hero=el("div",{class:"card dayhero"});
+  hero.append(el("div",{class:"eyebrow"},fmtDate(p.date)+(p.isRecovery?" · Rest day":" · Training day")));
+  hero.append(el("div",{class:"row"},
+    el("div",{},el("div",{class:"daytype"},p.name),el("div",{class:"daymeta"},p.focus)),
+    el("div",{style:"margin-left:auto;display:flex;gap:6px;flex-wrap:wrap"},
+      p.submitted?el("span",{class:"pill good"},"✓ Submitted"):el("span",{class:"pill acc"},countItems(p)+" exercises"),
+      el("span",{class:"pill"},S.profile.sessionMin+" min"))));
+  // progress to goal line
+  hero.append(el("div",{},
+    el("div",{class:"mini",style:"display:flex;justify-content:space-between;margin-bottom:4px"},
+      el("span",{},"Goal progress · "+S.profile.weightKg+" kg → "+S.profile.targetKg+" kg"),
+      el("span",{},h.toGo.toFixed(1)+" kg to go")),
+    el("div",{class:"progline"},el("i",{style:"width:"+h.pct.toFixed(0)+"%"}))));
+  v.append(hero);
+
+  // physio note
+  if(S.profile.physioNote) v.append(el("div",{class:"note phys"},el("b",{},"Physio-first: "),S.profile.physioNote));
+
+  if(p.coachNote) v.append(el("div",{class:"note"},el("b",{},(p.aiUsed?"AI coach: ":"Coach: ")),p.coachNote));
+
+  // blocks
+  p.blocks.forEach(b=>{
+    const wrap=el("div",{class:"card pad block"});
+    wrap.append(el("div",{class:"blocklabel"},el("span",{class:"dot "+b.kind}),el("h3",{},b.label),el("span",{class:"n"},b.items.length+(b.items.length>1?" moves":" move"))));
+    b.items.forEach(it=>wrap.append(exCard(it)));
+    v.append(wrap);
+  });
+
+  // submit
+  const bwrap=el("div",{class:"card pad",style:"display:flex;flex-direction:column;gap:10px"});
+  bwrap.append(el("div",{class:"mini"},"Log what you did (weight + reps + how it felt), then submit. Your entries feed the "+(S.profile.aiEnabled?"AI ":"")+"coach to build tomorrow. No time to log? Skip it — tomorrow simply repeats."));
+  const btn=el("button",{class:"btn primary block",onclick:()=>submitDay(btn)},p.submitted?"Re-analyse & update tomorrow":"Submit today → plan tomorrow");
+  bwrap.append(btn);
+  if(S.tomorrow){bwrap.append(el("div",{class:"mini",style:"text-align:center"},"Next up: "+S.tomorrow.name+" ("+fmtDate(S.tomorrow.date)+") — ready in the Plan tab."));}
+  v.append(bwrap);
+}
+function countItems(p){let n=0;p.blocks.forEach(b=>b.items.forEach(i=>{if(b.kind!=="warm")n++;}));return n;}
+
+function renderWeek(v){
+  v.append(el("div",{class:"sechead"},el("h2",{},"Your week"),el("span",{class:"sub"},S.profile.daysPerWeek+" training days · rolling 4-day split + rehab")));
+  // upcoming 7 days
+  const wrap=el("div",{class:"card pad",style:"display:flex;flex-direction:column;gap:8px"});
+  let cyc=S.cycle;
+  for(let i=0;i<7;i++){
+    const d=new Date(); d.setDate(d.getDate()+i); const ds=todayStr(d);
+    const train=isTrainingDay(ds);
+    let name,focus,key;
+    if(i===0&&S.plan){name=S.plan.name;focus=S.plan.focus;key=S.plan.dayKey;}
+    else if(train){const t=SPLIT[cyc%4];name=t.name;focus=t.focus;key=t.key;cyc++;}
+    else{name=RECOVERY.name;focus=RECOVERY.focus;key="R";}
+    if(i>0&&train&&!(i===0)){} // cyc already advanced above
+    const row=el("div",{style:"display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)"},
+      el("span",{class:"mono",style:"width:64px;flex:none;color:var(--muted);font-size:12px"},i===0?"Today":fmtDate(ds)),
+      el("span",{style:"width:30px;flex:none;font-family:var(--dsp);font-weight:800;color:"+(train?"var(--accent-strong)":"var(--faint)")},key),
+      el("div",{style:"flex:1;min-width:0"},el("div",{style:"font-weight:600;font-size:13.5px"},name),el("div",{class:"mini"},focus)),
+      train?el("span",{class:"pill acc"},"Train"):el("span",{class:"pill"},"Recover"));
+    wrap.append(row);
+  }
+  v.append(wrap);
+
+  // the 4-day split overview
+  v.append(el("div",{class:"sechead"},el("h2",{},"The 4-day split"),el("span",{class:"sub"},"How the cycle rotates")));
+  const grid=el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px"});
+  SPLIT.forEach(t=>{
+    const c=el("div",{class:"card pad"});
+    c.append(el("div",{style:"display:flex;align-items:baseline;gap:8px"},el("span",{style:"font-family:var(--dsp);font-weight:800;font-size:20px;color:var(--accent-strong)"},t.key),el("b",{style:"font-size:14px"},t.name.replace(/^.*—\s*/,""))));
+    c.append(el("div",{class:"mini",style:"margin:2px 0 8px"},t.focus));
+    const main=t.blocks.filter(b=>b.kind==="main").flatMap(b=>b.items).slice(0,5);
+    main.forEach(([id])=>c.append(el("div",{style:"font-size:12.5px;padding:3px 0;border-top:1px solid var(--line)"},EX[id].name)));
+    grid.append(c);
+  });
+  v.append(grid);
+}
+
+function sparkline(vals){
+  const w=200,h=34,pad=3; if(!vals.length)return el("div",{class:"mini"},"—");
+  const mx=Math.max(...vals),mn=Math.min(...vals),rng=(mx-mn)||1;
+  const step=vals.length>1?(w-2*pad)/(vals.length-1):0;
+  const pts=vals.map((val,i)=>[pad+i*step, h-pad-((val-mn)/rng)*(h-2*pad)]);
+  const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  svg.setAttribute("class","spark");svg.setAttribute("viewBox","0 0 "+w+" "+h);svg.setAttribute("preserveAspectRatio","none");
+  const area=document.createElementNS(svg.namespaceURI,"path");
+  area.setAttribute("d",d+" L "+pts[pts.length-1][0].toFixed(1)+" "+h+" L "+pts[0][0].toFixed(1)+" "+h+" Z");
+  area.setAttribute("fill","var(--accent-soft)");
+  const line=document.createElementNS(svg.namespaceURI,"path");
+  line.setAttribute("d",d);line.setAttribute("fill","none");line.setAttribute("stroke","var(--accent)");line.setAttribute("stroke-width","2");line.setAttribute("stroke-linejoin","round");
+  const end=document.createElementNS(svg.namespaceURI,"circle");
+  end.setAttribute("cx",pts[pts.length-1][0]);end.setAttribute("cy",pts[pts.length-1][1]);end.setAttribute("r","2.6");end.setAttribute("fill","var(--accent-strong)");
+  svg.append(area,line,end);return svg;
+}
+function renderProgress(v){
+  const h=health();
+  // health tiles
+  v.append(el("div",{class:"sechead"},el("h2",{},"Body & health"),el("span",{class:"sub"},"Updates from your Setup weight")));
+  const tiles=el("div",{class:"tiles"});
+  const bmiTile=el("div",{class:"tile"},el("div",{class:"k"},"BMI"),
+    el("div",{class:"v"},h.bmi.toFixed(1)," ",el("small",{},h.cat)),
+    el("div",{class:"bmiscale"},el("i",{style:"left:"+h.pos+"%"})),
+    el("div",{class:"d"},"Healthy: "+h.lo.toFixed(0)+"–"+h.hi.toFixed(0)+" kg for your height"));
+  tiles.append(bmiTile);
+  tiles.append(el("div",{class:"tile"},el("div",{class:"k"},"Current weight"),el("div",{class:"v"},S.profile.weightKg," ",el("small",{},"kg")),el("div",{class:"d"},"Ideal ≈ "+h.ideal.toFixed(0)+" kg (BMI 22.5)")));
+  tiles.append(el("div",{class:"tile"},el("div",{class:"k"},"Target"),el("div",{class:"v"},S.profile.targetKg," ",el("small",{},"kg")),el("div",{class:"d"},h.toGo.toFixed(1)+" kg to go · "+h.lost.toFixed(1)+" kg lost")));
+  tiles.append(el("div",{class:"tile"},el("div",{class:"k"},"Sessions logged"),el("div",{class:"v"},S.history.length),el("div",{class:"d"},"Since "+fmtDate(S.started))));
+  v.append(tiles);
+
+  // bodyweight trend
+  if(S.weightLog.length>1){
+    const c=el("div",{class:"card pad"});
+    c.append(el("div",{class:"blocklabel"},el("span",{class:"dot cardio"}),el("h3",{},"Bodyweight trend")));
+    c.append(sparkline(S.weightLog.map(w=>w.kg)));
+    c.append(el("div",{class:"mini",style:"display:flex;justify-content:space-between;margin-top:4px"},el("span",{},fmtDate(S.weightLog[0].date)+" · "+S.weightLog[0].kg+" kg"),el("span",{},"now · "+S.weightLog[S.weightLog.length-1].kg+" kg")));
+    v.append(c);
+  }
+
+  // per-muscle group progression
+  v.append(el("div",{class:"sechead"},el("h2",{},"Progress by muscle group"),el("span",{class:"sub"},"Top weight & volume from your logged sessions")));
+  const groups={};
+  S.history.forEach(hh=>hh.entries.forEach(e=>{
+    const ex=EX[e.exId]; const prims=ex?ex.primary:[];
+    const w=parseFloat(e.weightUsed)||0, reps=parseFloat(e.repsDone)||0, sets=parseFloat(e.sets)||0;
+    prims.forEach(m=>{ (groups[m]=groups[m]||{top:[],vol:0}); groups[m].top.push(w); groups[m].vol+=(w||1)*(reps||1)*(sets||1); });
+  }));
+  const keys=Object.keys(groups);
+  if(!keys.length){ v.append(el("div",{class:"card pad empty"},"Log and submit a session and your muscle-group progression charts appear here.")); }
+  else{
+    const grid=el("div",{class:"mggrid"});
+    keys.sort((a,b)=>groups[b].vol-groups[a].vol).forEach(m=>{
+      const g=groups[m]; const top=Math.max(...g.top,0);
+      const card=el("div",{class:"mg"});
+      card.append(el("div",{class:"top"},el("span",{class:"name"},MG[m]||m),el("span",{class:"best"},top>0?("best "+top+" "+((S.equipment.loads[0]||{}).u||"lb")):"bodyweight")));
+      card.append(sparkline(g.top.map(x=>x||0)));
+      card.append(el("span",{class:"vol"},"total volume "+Math.round(g.vol).toLocaleString()));
+      grid.append(card);
+    });
+    v.append(grid);
+  }
+}
+
+function renderHistory(v){
+  v.append(el("div",{class:"sechead"},el("h2",{},"History"),el("span",{class:"sub"},S.history.length+" session(s) logged")));
+  const bar=el("div",{class:"btnrow"});
+  bar.append(el("button",{class:"btn ghost",onclick:exportCSV},"⤓ Download CSV (save to Drive)"));
+  const imp=el("input",{type:"file",accept:".csv,text/csv",style:"display:none",id:"impfile",onchange:e=>{if(e.target.files[0])importCSV(e.target.files[0]);}});
+  bar.append(el("button",{class:"btn ghost",onclick:()=>imp.click()},"⤒ Import CSV"),imp);
+  v.append(bar);
+  if(!S.history.length){ v.append(el("div",{class:"card pad empty"},"No sessions yet. Complete Today and hit Submit — every session is saved here and in your CSV.")); return; }
+  const list=el("div",{style:"display:flex;flex-direction:column;gap:9px"});
+  S.history.forEach(h=>{
+    const nEx=h.entries.length, painN=h.entries.filter(e=>e.pain).length;
+    const det=el("details",{class:"hitem"});
+    det.append(el("summary",{},
+      el("span",{class:"hd"},fmtDate(h.date)),
+      el("span",{class:"ht"},h.name),
+      el("span",{class:"hv"},nEx+" moves"+(painN?" · ⚠"+painN:""))));
+    const body=el("div",{class:"hbody"});
+    if(h.coachNote)body.append(el("div",{class:"note",style:"margin:10px 0"},el("b",{},(h.aiUsed?"AI coach: ":"Coach: ")),h.coachNote));
+    h.entries.forEach(e=>body.append(el("div",{class:"hrow"},
+      el("span",{class:"rn"},e.name+(e.pain?" ⚠":"")),
+      el("span",{class:"rv"},(e.weightUsed?e.weightUsed+(e.unit||"")+" ":"")+(e.repsDone?"× "+e.repsDone:e.prescribed)+(e.feel?" · "+e.feel:"")))));
+    det.append(body);
+    list.append(det);
+  });
+  v.append(list);
+}
+
+function renderSettings(v){
+  const p=S.profile;
+  // profile
+  const prof=el("div",{class:"card pad"});
+  prof.append(el("div",{class:"sechead"},el("h2",{},"Your details"),el("span",{class:"sub"},"Drives your BMI, target & plan")));
+  const g1=el("div",{class:"fgrid",style:"margin-top:10px"});
+  const numRow=(lab,val,step,on)=>el("div",{class:"frow"},el("label",{},lab),el("input",{type:"number",value:val,step:step||"1",oninput:e=>{on(e.target.value);}}));
+  g1.append(numRow("Age",p.age,"1",x=>{p.age=+x;save();}));
+  g1.append(el("div",{class:"frow"},el("label",{},"Sex (for BMI ranges)"),(()=>{const s=el("select",{onchange:e=>{p.sex=e.target.value;save();}});[["male","Male"],["female","Female"],["na","Prefer not to say"]].forEach(([vv,l])=>{const o=el("option",{value:vv},l);if(vv===p.sex)o.selected=true;s.append(o);});return s;})()));
+  g1.append(numRow("Height (cm)",p.heightCm,"0.5",x=>{p.heightCm=+x;save();}));
+  g1.append(el("div",{class:"frow"},el("label",{},"Current weight (kg)"),el("input",{type:"number",step:"0.1",value:p.weightKg,onchange:e=>{const kg=+e.target.value;p.weightKg=kg;const t=todayStr();const ex=S.weightLog.find(w=>w.date===t);if(ex)ex.kg=kg;else S.weightLog.push({date:t,kg});S.weightLog.sort((a,b)=>a.date<b.date?-1:1);save();toast("Weight logged");}})));
+  g1.append(numRow("Target weight (kg)",p.targetKg,"0.5",x=>{p.targetKg=+x;save();}));
+  prof.append(g1);
+  const hh=health();
+  prof.append(el("div",{class:"note",style:"margin-top:12px"},el("b",{},"Snapshot: "),"BMI "+hh.bmi.toFixed(1)+" ("+hh.cat+"). Healthy range for your height is "+hh.lo.toFixed(0)+"–"+hh.hi.toFixed(0)+" kg; a solid ideal is ~"+hh.ideal.toFixed(0)+" kg. Aim for ~0.5 kg/week to protect the tendon and keep muscle."));
+  v.append(prof);
+
+  // training prefs
+  const tr=el("div",{class:"card pad"});
+  tr.append(el("div",{class:"sechead"},el("h2",{},"Training preferences")));
+  const g2=el("div",{class:"fgrid",style:"margin-top:10px"});
+  const selRow=(lab,opts,val,on)=>el("div",{class:"frow"},el("label",{},lab),(()=>{const s=el("select",{onchange:e=>{on(e.target.value);}});opts.forEach(([vv,l])=>{const o=el("option",{value:vv},l);if(String(vv)===String(val))o.selected=true;s.append(o);});return s;})());
+  g2.append(selRow("Days per week",[[3,"3 days"],[4,"4 days"],[5,"5 days"],[6,"6 days"]],p.daysPerWeek,x=>{p.daysPerWeek=+x;save();render();}));
+  g2.append(selRow("Session length",[[30,"30 min"],[45,"45 min"],[60,"60 min"]],p.sessionMin,x=>{p.sessionMin=+x;save();}));
+  g2.append(selRow("Experience",[["beginner","Beginner"],["some","Some experience"],["experienced","Experienced"]],p.experience,x=>{p.experience=x;save();}));
+  g2.append(selRow("Bench",[["incline","Adjustable / incline"],["flat","Flat only"]],S.equipment.bench,x=>{S.equipment.bench=x;save();}));
+  tr.append(g2);
+  // dumbbells editor
+  tr.append(el("div",{class:"frow",style:"margin-top:14px"},el("label",{},"Your dumbbells (tap × to remove)"),(()=>{
+    const box=el("div",{class:"loadlist"});
+    const rebuild=()=>{box.innerHTML="";
+      loadsSorted().forEach((l,i)=>{const chip=el("span",{class:"loadchip"},l.v+" "+l.u,el("button",{title:"remove",onclick:()=>{const idx=S.equipment.loads.findIndex(x=>x.v===l.v&&x.u===l.u);if(idx>-1)S.equipment.loads.splice(idx,1);save();rebuild();}},"×"));box.append(chip);});
+      const val=el("input",{type:"number",placeholder:"e.g. 25",step:"0.5",style:"width:80px"});
+      const unit=el("select",{style:"width:60px"},el("option",{value:"lb"},"lb"),el("option",{value:"kg"},"kg"));
+      const add=el("button",{class:"btn ghost",style:"padding:7px 12px;font-size:13px",onclick:()=>{const v=parseFloat(val.value);if(v>0){S.equipment.loads.push({v,u:unit.value});save();rebuild();}}},"+ Add");
+      box.append(el("span",{style:"display:inline-flex;gap:6px;align-items:center"},val,unit,add));
+    };rebuild();return box;})()));
+  tr.append(el("div",{class:"mini",style:"margin-top:8px"},"You told me: 5, 10, 15 lb and a 20 — I set the 20 as lb. If it's actually 20 kg, remove it and add 20 kg."));
+  v.append(tr);
+
+  // AI + physio
+  const ai=el("div",{class:"card pad"});
+  ai.append(el("div",{class:"sechead"},el("h2",{},"AI coach & safety")));
+  ai.append(el("div",{class:"frow",style:"margin-top:10px;flex-direction:row;align-items:center;gap:10px"},
+    el("input",{type:"checkbox",id:"aitog",style:"width:18px;height:18px",checked:p.aiEnabled?"checked":null,onchange:e=>{p.aiEnabled=e.target.checked;save();}}),
+    el("label",{for:"aitog",style:"font-weight:500;color:var(--ink)"},"Use AI coach (Claude) to analyse each day and plan the next")));
+  ai.append(el("div",{class:"mini",style:"margin-top:4px"},"When on, submitting a day sends that day's log to Claude for a tailored coaching note and progression. If AI isn't available it falls back to the built-in progression rules automatically — the app always works. (In a future standalone app we can wire your Gemini key here instead.)"));
+  ai.append(el("div",{class:"frow",style:"margin-top:14px"},el("label",{},"Physio / safety note (shown on Today)"),el("textarea",{rows:"3",oninput:e=>{p.physioNote=e.target.value;save();}},p.physioNote)));
+  v.append(ai);
+
+  // data
+  const dt=el("div",{class:"card pad"});
+  dt.append(el("div",{class:"sechead"},el("h2",{},"Your data")));
+  dt.append(el("div",{class:"mini",style:"margin:8px 0"},"Everything is saved privately in this browser. Download the CSV to back it up in Google Drive or move to another device."));
+  const imp=el("input",{type:"file",accept:".csv,text/csv",style:"display:none",onchange:e=>{if(e.target.files[0])importCSV(e.target.files[0]);}});
+  dt.append(el("div",{class:"btnrow"},
+    el("button",{class:"btn ghost",onclick:exportCSV},"⤓ Download CSV"),
+    el("button",{class:"btn ghost",onclick:()=>imp.click()},"⤒ Import CSV"),imp,
+    el("button",{class:"btn ghost",style:"color:var(--crit)",onclick:()=>{if(confirm("Reset everything and start fresh? Download your CSV first if you want to keep it."))("localStorage"in window)&&(localStorage.removeItem(KEY),S=freshState(),save(),render(),toast("Reset done"));}},"Reset app")));
+  v.append(dt);
+}
+
+/* ============ info modal ============ */
+function openInfo(exId){
+  const ex=EX[exId]; const sh=$("#sheet"); sh.innerHTML="";
+  const catName={warm:"Warm-up",push:"Upper · Push",pull:"Upper · Pull",lower:"Lower body",knee:"Knee rehab",ankle:"Ankle stability",core:"Core",cardio:"Cardio"}[ex.cat]||ex.cat;
+  sh.append(el("div",{class:"sheet-h"},
+    el("div",{},el("div",{class:"cat"},catName),el("h3",{},ex.name)),
+    el("button",{class:"x","aria-label":"Close",onclick:closeInfo},"×")));
+  const b=el("div",{class:"sheet-b"});
+  // muscles
+  const mrow=el("div",{class:"muscleicons"});
+  ex.primary.forEach(m=>mrow.append(el("span",{class:"mtag"},MG[m]||m)));
+  ex.secondary.forEach(m=>mrow.append(el("span",{class:"mtag sec"},MG[m]||m)));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"Targets"),mrow));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"Set-up / form"),el("p",{},ex.form)));
+  const ol=el("ol",{}); ex.steps.forEach(s=>ol.append(el("li",{},s)));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"Step by step"),ol));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"✓ You should feel"),el("div",{class:"feelbox"},ex.feel)));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"⚠ If your form is wrong"),el("div",{class:"warnbox"},ex.wrong)));
+  const ul=el("ul",{}); ex.precautions.forEach(s=>ul.append(el("li",{},s)));
+  b.append(el("div",{class:"infoblock"},el("h4",{},"Precautions"),ul));
+  sh.append(b);
+  $("#overlay").classList.add("on"); document.body.style.overflow="hidden";
+}
+function closeInfo(){ $("#overlay").classList.remove("on"); document.body.style.overflow=""; }
+$("#overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeInfo();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeInfo();});
+
+/* ============ theme toggle ============ */
+$("#themeBtn").addEventListener("click",()=>{
+  const cur=document.documentElement.getAttribute("data-theme");
+  const dark=window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches;
+  const next=cur? (cur==="dark"?"light":"dark") : (dark?"light":"dark");
+  document.documentElement.setAttribute("data-theme",next);
+  try{localStorage.setItem("gw_theme",next);}catch(e){}
+});
+try{const th=localStorage.getItem("gw_theme");if(th)document.documentElement.setAttribute("data-theme",th);}catch(e){}
+
+/* ============ boot ============ */
+load(); render();
+</script>
+
+</body>
+</html>
